@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^(.*)$ HTTP://appname/$1 [P]
