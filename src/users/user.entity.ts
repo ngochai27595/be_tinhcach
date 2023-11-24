@@ -22,4 +22,7 @@ export class Users {
 
   @Column({ default: 1 })
   is_enable: number;
+
+  @Column({ default: 10 })
+  remaining_view: number;
 }

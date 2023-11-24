@@ -36,6 +36,7 @@ export class AuthService {
             role: '',
             type: ACCOUNT_TYPES.DEFAULT,
             is_enable: 1,
+            remaining_view: 10,
           };
           this.usersService.add(userAdd);
           return { ...userAdd, permisions: [] };

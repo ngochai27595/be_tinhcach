@@ -31,6 +31,14 @@ export class UsersService {
     return await this.usersRepository.save(user);
   }
 
+  async findByIdAndUpdateView( id: string, remaining_view: number ) {
+    return await this.dataSource.query(
+      `UPDATE users
+      SET remaining_view = ${remaining_view}
+      WHERE id = '${id}';`,
+    );
+  }
+
   async count(role: any, search: string): Promise<any> {
     let roleSql = "WHERE p.role = 'OTHER'";
     switch (role) {

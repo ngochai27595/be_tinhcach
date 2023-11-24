@@ -54,6 +54,7 @@ export class UsersController {
             role: '',
             type: body.type,
             is_enable: 1,
+            remaining_view: 10,
           };
           await this.service.add(user);
 
@@ -200,4 +201,30 @@ export class UsersController {
     const users = await this.service.gets(role, search, skip, take);
     return { data: users, total, page };
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('updateView')
+  async updateView(
+    @Request() req: any,
+    // @Param() params: { id: string },
+  ) {
+    try {
+      // Find the user by ID and update the information
+      const user: any = await this.service.getById(req.user.userId);
+      if(user.remaining_view < 1) return  { status: false, msg: 'No remaining view!' };
+      const updatedUser = await this.service.findByIdAndUpdateView(req.user.userId, user.remaining_view - 1);
+
+      if (!updatedUser) {
+        return { status: false, msg: 'User not exist!' };
+      }
+
+      return { status: true, remainingView: user.remaining_view - 1 };
+    } catch (error) {
+      return { status: false, error };
+    }
+  }
+
+
 }
+
+
